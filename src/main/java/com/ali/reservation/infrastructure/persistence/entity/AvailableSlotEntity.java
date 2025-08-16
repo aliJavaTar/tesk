@@ -22,4 +22,7 @@ public class AvailableSlotEntity extends BaseEntity {
 
     @Column(name = "is_reserved", nullable = false)
     private boolean isReserved;
+
+    @Version
+    private Long version;
 }

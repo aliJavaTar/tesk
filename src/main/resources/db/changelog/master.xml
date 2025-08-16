@@ -4,5 +4,9 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <include file="db/changelog/2025-08-16-create-available-slots.xml"/>
+    <include file="db/changelog/db.changelog-1-create-users.xml"/>
+    <include file="db/changelog/db.changelog-2-create-available-slots.xml"/>
+    <include file="db/changelog/db.changelog-3-insert-users.xml"/>
+    <include file="db/changelog/db.changelog-4-insert-available-slots.xml"/>
+    <include file="db/changelog/db.changelog-6-create-reservations-table.xml"/>
 </databaseChangeLog>

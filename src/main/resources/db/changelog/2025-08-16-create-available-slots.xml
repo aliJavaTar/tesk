@@ -18,6 +18,14 @@
             <column name="is_reserved" type="BOOLEAN" defaultValueBoolean="false">
                 <constraints nullable="false"/>
             </column>
+            <column name="version" type="BIGINT" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
+
+        <createIndex tableName="available_slots" indexName="idx_slots_not_reserved_start_time">
+            <column name="is_reserved"/>
+            <column name="start_time"/>
+        </createIndex>
     </changeSet>
 </databaseChangeLog>

@@ -6,54 +6,64 @@
 
     <changeSet id="4-insert-available-slots" author="java-boy" runOnChange="true">
         <insert tableName="available_slots">
-            <column name="start_time" valueDate="2024-12-29T09:00:00"/>
-            <column name="end_time" valueDate="2024-12-29T10:00:00"/>
+            <column name="start_time" valueDate="2025-12-29T09:00:00"/>
+            <column name="end_time" valueDate="2025-12-29T10:00:00"/>
             <column name="is_reserved" valueBoolean="false"/>
+            <column name="version" value="0"/>
         </insert>
         <insert tableName="available_slots">
-            <column name="start_time" valueDate="2024-12-29T10:00:00"/>
-            <column name="end_time" valueDate="2024-12-29T11:00:00"/>
+            <column name="start_time" valueDate="2025-12-29T10:00:00"/>
+            <column name="end_time" valueDate="2025-12-29T11:00:00"/>
             <column name="is_reserved" valueBoolean="false"/>
+            <column name="version" value="0"/>
         </insert>
         <insert tableName="available_slots">
-            <column name="start_time" valueDate="2024-12-29T11:00:00"/>
-            <column name="end_time" valueDate="2024-12-29T12:00:00"/>
+            <column name="start_time" valueDate="2025-12-29T11:00:00"/>
+            <column name="end_time" valueDate="2025-12-29T12:00:00"/>
             <column name="is_reserved" valueBoolean="false"/>
+            <column name="version" value="0"/>
         </insert>
         <insert tableName="available_slots">
-            <column name="start_time" valueDate="2024-12-29T12:00:00"/>
-            <column name="end_time" valueDate="2024-12-29T13:00:00"/>
+            <column name="start_time" valueDate="2025-12-29T12:00:00"/>
+            <column name="end_time" valueDate="2025-12-29T13:00:00"/>
             <column name="is_reserved" valueBoolean="false"/>
+            <column name="version" value="0"/>
         </insert>
         <insert tableName="available_slots">
-            <column name="start_time" valueDate="2024-12-29T13:00:00"/>
-            <column name="end_time" valueDate="2024-12-29T14:00:00"/>
+            <column name="start_time" valueDate="2025-12-29T13:00:00"/>
+            <column name="end_time" valueDate="2025-12-29T14:00:00"/>
             <column name="is_reserved" valueBoolean="false"/>
+            <column name="version" value="0"/>
         </insert>
         <insert tableName="available_slots">
-            <column name="start_time" valueDate="2024-12-29T14:00:00"/>
-            <column name="end_time" valueDate="2024-12-29T15:00:00"/>
+            <column name="start_time" valueDate="2025-12-29T14:00:00"/>
+            <column name="end_time" valueDate="2025-12-29T15:00:00"/>
             <column name="is_reserved" valueBoolean="false"/>
+            <column name="version" value="0"/>
         </insert>
         <insert tableName="available_slots">
-            <column name="start_time" valueDate="2024-12-29T15:00:00"/>
-            <column name="end_time" valueDate="2024-12-29T16:00:00"/>
+            <column name="start_time" valueDate="2025-12-29T15:00:00"/>
+            <column name="end_time" valueDate="2025-12-29T16:00:00"/>
             <column name="is_reserved" valueBoolean="false"/>
+            <column name="version" value="0"/>
         </insert>
         <insert tableName="available_slots">
-            <column name="start_time" valueDate="2024-12-29T16:00:00"/>
-            <column name="end_time" valueDate="2024-12-29T17:00:00"/>
+            <column name="start_time" valueDate="2025-12-29T16:00:00"/>
+            <column name="end_time" valueDate="2025-12-29T17:00:00"/>
             <column name="is_reserved" valueBoolean="false"/>
+            <column name="version" value="0"/>
         </insert>
         <insert tableName="available_slots">
-            <column name="start_time" valueDate="2024-12-30T09:00:00"/>
-            <column name="end_time" valueDate="2024-12-30T10:00:00"/>
+            <column name="start_time" valueDate="2025-12-30T09:00:00"/>
+            <column name="end_time" valueDate="2025-12-30T10:00:00"/>
             <column name="is_reserved" valueBoolean="false"/>
+            <column name="version" value="0"/>
         </insert>
         <insert tableName="available_slots">
-            <column name="start_time" valueDate="2024-12-30T10:00:00"/>
-            <column name="end_time" valueDate="2024-12-30T11:00:00"/>
+            <column name="start_time" valueDate="2025-12-30T10:00:00"/>
+            <column name="end_time" valueDate="2025-12-30T11:00:00"/>
             <column name="is_reserved" valueBoolean="false"/>
+            <column name="version" value="0"/>
         </insert>
     </changeSet>
 </databaseChangeLog>
