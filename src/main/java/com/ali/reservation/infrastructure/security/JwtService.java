@@ -1,5 +1,6 @@
 package com.ali.reservation.infrastructure.security;
 
+import com.ali.reservation.presentation.exption.ApplicationException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
@@ -17,6 +18,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+
+import static com.ali.reservation.presentation.exption.ErrorType.TOKEN_INVALID;
 
 @Service
 @Slf4j
@@ -87,7 +90,7 @@ public class JwtService {
             return e.getClaims();
         } catch (Exception e) {
             log.error("Invalid JWT token: {}", e.getMessage());
-            throw new JwtException("Invalid JWT token: " + e.getMessage());
+            throw new ApplicationException(TOKEN_INVALID, "Invalid JWT token: " + e.getMessage());
         }
     }
 

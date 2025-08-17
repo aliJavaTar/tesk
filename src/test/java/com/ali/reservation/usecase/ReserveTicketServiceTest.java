@@ -3,6 +3,7 @@ package com.ali.reservation.usecase;
 import com.ali.reservation.infrastructure.security.SecurityUtils;
 import com.ali.reservation.presentation.dto.reqeust.ReserveSlotRequest;
 import com.ali.reservation.presentation.dto.response.ReservationResponse;
+import com.ali.reservation.presentation.exption.ApplicationException;
 import com.ali.reservation.presentation.exption.EntityNotFountException;
 import com.ali.reservation.presentation.exption.TimeNotValidException;
 import org.junit.jupiter.api.BeforeEach;
@@ -166,7 +167,6 @@ class ReserveTicketServiceTest {
                 reserveTicketService.cancelReservation(slot.getId())))
                 .isInstanceOf(EntityNotFountException.class);
     }
-
 
     private ReserveSlotRequest createReserveSlotRequest(LocalDateTime slotTime) {
         var request = new ReserveSlotRequest();
