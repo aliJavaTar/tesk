@@ -39,5 +39,19 @@
                 referencedTableName="available_slots"
                 referencedColumnNames="id"
                 constraintName="fk_reservation_slot"/>
+
+
+
     </changeSet>
+
+    <changeSet id="6-unique-active-slot" author="java-boy">
+        <comment>Partial unique index for active reservations only</comment>
+        <sql>
+            CREATE UNIQUE INDEX uq_reservation_slot_active
+                ON reservations(slot_id)
+                WHERE deleted = false;
+        </sql>
+    </changeSet>
+
+
 </databaseChangeLog>

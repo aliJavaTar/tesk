@@ -20,8 +20,6 @@ public class ReservationEntity extends BaseEntity {
     @Column(name = "user_id", nullable = false)
     private Long userId;
 
-    @Column(name = "slot_id", nullable = false)
-    private Long slotId;
 
     @Column(name = "reserved_at", nullable = false)
     private LocalDateTime reservedAt;
@@ -30,20 +28,20 @@ public class ReservationEntity extends BaseEntity {
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private UserEntity user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "slot_id", insertable = false, updatable = false)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "slot_id", nullable = false, unique = true)
     private AvailableSlotEntity slot;
 
-    private ReservationEntity(Long userId, Long slotId, LocalDateTime now, AvailableSlotEntity slot) {
+
+    private ReservationEntity(Long userId, LocalDateTime now, AvailableSlotEntity slot) {
         this.userId = userId;
-        this.slotId = slotId;
         this.reservedAt = now;
         this.slot = slot;
     }
 
 
     public static ReservationEntity of(Long userId, AvailableSlotEntity slot) {
-        return new ReservationEntity(userId, slot.getId(), LocalDateTime.now(), slot);
+        return new ReservationEntity(userId, LocalDateTime.now(), slot);
     }
 
     @PrePersist

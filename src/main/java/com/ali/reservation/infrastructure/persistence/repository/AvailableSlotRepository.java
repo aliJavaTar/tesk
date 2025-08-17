@@ -23,5 +23,4 @@ public interface AvailableSlotRepository extends JpaRepository<AvailableSlotEnti
             "AND s.startTime = :fromTime")
     Optional<AvailableSlotEntity> findByStartTime(@Param("fromTime") LocalDateTime fromTime);
 
-    Optional<AvailableSlotEntity> findByIdAndIsReservedFalse(Long id);
 }
