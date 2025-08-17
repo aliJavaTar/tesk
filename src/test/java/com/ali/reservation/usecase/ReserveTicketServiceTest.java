@@ -1,19 +1,11 @@
 package com.ali.reservation.usecase;
 
-import com.ali.reservation.infrastructure.persistence.entity.AvailableSlotEntity;
-import com.ali.reservation.infrastructure.persistence.entity.ReservationEntity;
-import com.ali.reservation.infrastructure.persistence.entity.UserEntity;
-import com.ali.reservation.infrastructure.persistence.repository.AvailableSlotRepository;
-import com.ali.reservation.infrastructure.persistence.repository.ReservationRepository;
-import com.ali.reservation.infrastructure.persistence.repository.UserRepository;
 import com.ali.reservation.infrastructure.security.SecurityUtils;
 import com.ali.reservation.presentation.dto.reqeust.ReserveSlotRequest;
 import com.ali.reservation.presentation.dto.response.ReservationResponse;
 import com.ali.reservation.presentation.exption.ApplicationException;
 import com.ali.reservation.presentation.exption.EntityNotFountException;
 import com.ali.reservation.presentation.exption.TimeNotValidException;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,7 +18,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.PostgreSQLContainer;
@@ -34,10 +25,6 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

@@ -2,7 +2,6 @@ package com.ali.reservation.infrastructure.persistence.entity;
 
 import com.ali.reservation.infrastructure.persistence.entity.base.BaseEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

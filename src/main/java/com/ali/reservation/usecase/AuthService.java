@@ -4,7 +4,6 @@ import com.ali.reservation.infrastructure.persistence.entity.UserEntity;
 import com.ali.reservation.infrastructure.persistence.repository.UserRepository;
 import com.ali.reservation.infrastructure.security.JwtService;
 import com.ali.reservation.infrastructure.security.UserSecurity;
-
 import com.ali.reservation.presentation.dto.reqeust.LoginRequest;
 import com.ali.reservation.presentation.dto.response.AuthResponse;
 import com.ali.reservation.presentation.dto.response.RegisterRequest;
@@ -16,7 +15,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -75,7 +73,7 @@ public class AuthService {
             log.info("User logged in successfully: {}", request.getUsername());
 
             UserEntity userEntity = userRepository.findByUsername(request.getUsername())
-                    .orElseThrow(() -> new ApplicationException(USER_NOT_FOUND,"User not found"));
+                    .orElseThrow(() -> new ApplicationException(USER_NOT_FOUND, "User not found"));
 
             return buildAuthResponse(token, userEntity);
 

@@ -1,6 +1,5 @@
 package com.ali.reservation.infrastructure.security;
 
-import com.ali.reservation.infrastructure.persistence.entity.UserEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
