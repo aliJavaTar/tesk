@@ -21,15 +21,15 @@ import org.springframework.web.cors.CorsConfigurationSource;
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final CorsConfigurationSource corsConfigurationSource; 
+    private final CorsConfigurationSource corsConfigurationSource;
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final JwtAuthEntryPoint jwtAuthEntryPoint;
     private static final String[] PUBLIC_URLS = {
-            "/api/auth/**",
             "/swagger-ui.html",
             "/swagger-ui/**",
             "/v3/api-docs/**",
             "/swagger-resources/**",
+            "/api/v1/auth/**"
     };
 
     @Bean
@@ -39,7 +39,6 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(PUBLIC_URLS).permitAll()
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
 
                 .sessionManagement(session -> session

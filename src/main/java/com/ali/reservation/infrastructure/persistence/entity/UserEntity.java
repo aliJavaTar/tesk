@@ -4,18 +4,17 @@ import com.ali.reservation.infrastructure.persistence.entity.base.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Builder
 @Setter
 public class UserEntity extends BaseEntity {
     @Column(unique = true, nullable = false)
@@ -24,6 +23,8 @@ public class UserEntity extends BaseEntity {
     private String password;
     @Column(unique = true)
     private String email;
+
     @Column(nullable = false, name = "created_at")
-    private LocalDate createdAt;
+    @Builder.Default
+    private LocalDateTime createdAt = LocalDateTime.now();
 }

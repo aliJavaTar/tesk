@@ -1,6 +1,5 @@
 package com.ali.reservation.infrastructure.security;
 
-import com.ali.reservation.infrastructure.persistence.entity.UserEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
@@ -49,6 +48,16 @@ public class JwtService {
     }
 
 
+    public boolean isTokenValid(String token, UserDetails userDetails) {
+        try {
+            final String username = extractUsername(token);
+            return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+        } catch (JwtException | IllegalArgumentException e) {
+            log.error("JWT validation error: {}", e.getMessage());
+            return false;
+        }
+    }
+
     private String buildToken(Map<String, Object> extraClaims, UserSecurity user, long expiration) {
         return Jwts.builder()
                 .claims(extraClaims)
@@ -58,16 +67,6 @@ public class JwtService {
                 .issuer(issuer)
                 .signWith(getSignInKey(), Jwts.SIG.HS256)
                 .compact();
-    }
-
-    public boolean isTokenValid(String token, UserDetails userDetails) {
-        try {
-            final String username = extractUsername(token);
-            return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
-        } catch (JwtException | IllegalArgumentException e) {
-            log.error("JWT validation error: {}", e.getMessage());
-            return false;
-        }
     }
 
     private boolean isTokenExpired(String token) {

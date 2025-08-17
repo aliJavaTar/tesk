@@ -6,14 +6,15 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.SoftDelete;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "reservations")
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
+@SoftDelete
 @Setter
 public class ReservationEntity extends BaseEntity {
 
@@ -33,4 +34,23 @@ public class ReservationEntity extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "slot_id", insertable = false, updatable = false)
     private AvailableSlotEntity slot;
+
+    private ReservationEntity(Long userId, Long slotId, LocalDateTime now, AvailableSlotEntity slot) {
+        this.userId = userId;
+        this.slotId = slotId;
+        this.reservedAt = now;
+        this.slot = slot;
+    }
+
+
+    public static ReservationEntity of(Long userId, AvailableSlotEntity slot) {
+        return new ReservationEntity(userId, slot.getId(), LocalDateTime.now(), slot);
+    }
+
+    @PrePersist
+    public void prePersist() {
+        if (reservedAt == null) {
+            reservedAt = LocalDateTime.now();
+        }
+    }
 }

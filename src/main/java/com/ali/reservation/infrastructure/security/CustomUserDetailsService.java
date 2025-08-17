@@ -1,6 +1,6 @@
 package com.ali.reservation.infrastructure.security;
 
-import com.ali.reservation.infrastructure.mapper.UserSecurityMapper;
+import com.ali.reservation.presentation.mapper.UserSecurityMapper;
 import com.ali.reservation.infrastructure.persistence.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -14,14 +14,14 @@ import java.util.Optional;
 @Repository
 public interface AvailableSlotRepository extends JpaRepository<AvailableSlotEntity, Long> {
 
-    @Modifying
-    @Query("UPDATE AvailableSlotEntity s SET s.isReserved = true " +
-            "WHERE s.id = :id AND s.isReserved = false AND s.version = :version")
-    int reserveSlotOptimistic(@Param("id") Long id, @Param("version") Long version);
 
     @Query("SELECT s FROM AvailableSlotEntity s WHERE s.isReserved = false " +
             "AND s.startTime >= :fromTime ORDER BY s.startTime")
     Page<AvailableSlotEntity> findAvailableSlots(@Param("fromTime") LocalDateTime fromTime, Pageable pageable);
+
+    @Query("SELECT s FROM AvailableSlotEntity s WHERE s.isReserved = false " +
+            "AND s.startTime = :fromTime")
+    Optional<AvailableSlotEntity> findByStartTime(@Param("fromTime") LocalDateTime fromTime);
 
     Optional<AvailableSlotEntity> findByIdAndIsReservedFalse(Long id);
 }

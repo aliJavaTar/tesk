@@ -6,8 +6,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class ReservationResponse {
-    private Long id;
-    private Long slotId;
-    private Long userId;
-    private LocalDateTime reservedAt;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
+
 }
