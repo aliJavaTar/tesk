@@ -12,6 +12,8 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -46,11 +48,24 @@ class ReservationConcurrencyTest {
         var user1 = concurrencyHelper.createUserForConcurrencyTest("user1");
         var user2 = concurrencyHelper.createUserForConcurrencyTest("user2");
 
-        ConcurrencyTestResult result = concurrencyHelper.executeSimultaneousReservations(
-            slot, user1, user2);
+        ConcurrencyTestResult result = concurrencyHelper.executeSimultaneousReservations(slot, user1, user2);
 
         assertThat(result.successCount()).isEqualTo(1);
         assertThat(result.failureCount()).isEqualTo(1);
+        assertSlotFinalStateIsConsistent(slot.getId());
+    }
+    @Test
+    void reserveSlot_sameSlotTenUsers_onlyOneSucceeds() {
+        var slotTime = LocalDateTime.now().plusHours(3);
+        var slot = concurrencyHelper.createSlotForConcurrencyTest(slotTime);
+
+        List<TestUser> users = IntStream.range(0, 10)
+                .mapToObj(index -> concurrencyHelper.createUserForConcurrencyTest("user" + index)).toList();
+
+        ConcurrencyTestResult result = concurrencyHelper.executeConcurrentReservations(slot, users);
+
+        assertThat(result.successCount()).isEqualTo(1);
+        assertThat(result.failureCount()).isEqualTo(9);
         assertSlotFinalStateIsConsistent(slot.getId());
     }
 

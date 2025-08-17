@@ -55,6 +55,7 @@ public class ReserveTicketService {
     @CacheEvict(cacheNames = "slots", allEntries = true)
     @Retryable(
             retryFor = {ObjectOptimisticLockingFailureException.class, OptimisticLockException.class},
+            notRecoverable = {EntityNotFountException.class},
             maxAttempts = 2,
             backoff = @Backoff(delay = 200)
     )
@@ -90,8 +91,14 @@ public class ReserveTicketService {
     }
 
     @Recover
-    public void recoverFromOptimisticLock(Exception ex, ReserveSlotRequest request) {
+    public void recoverFromOptimisticLock(ObjectOptimisticLockingFailureException ex, ReserveSlotRequest request) {
         log.error("Failed to reserve slot after retries: {}", request.getSlotStartTime(), ex);
-        throw new ApplicationException(INTERNAL_ERROR,"Could not reserve slot after retries");
+        throw new ApplicationException(CONFLICT, "Could not reserve slot after retries");
+    }
+
+    @Recover
+    public void recoverFromOptimisticLock(OptimisticLockException ex, ReserveSlotRequest request) {
+        log.error("Failed to reserve slot after retries: {}", request.getSlotStartTime(), ex);
+        throw new ApplicationException(CONFLICT, "Could not reserve slot after retries");
     }
 }

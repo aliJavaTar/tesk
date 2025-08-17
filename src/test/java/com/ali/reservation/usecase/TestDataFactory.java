@@ -26,7 +26,7 @@ class TestDataFactory {
     }
 
     public TestUser createTestUser(String username) {
-        UserEntity user = new UserEntity();
+        var user = new UserEntity();
         user.setUsername(username + "-" + System.currentTimeMillis());
         user.setEmail(username + "-" + System.currentTimeMillis() + "@example.com");
         user.setPassword("secret");

@@ -11,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -24,7 +26,7 @@ public class ReserveController {
 
 
     @GetMapping("/slots")
-    public Page<ReservationResponse> getAvailableSlots(
+    public ResponseEntity<Page<ReservationResponse>> getAvailableSlots(
             @Parameter(
                     name = "from",
                     description = "Start datetime in ISO format: `yyyy-MM-dd'T'HH:mm:ss`",
@@ -35,16 +37,19 @@ public class ReserveController {
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
             LocalDateTime from,
             @ParameterObject @PageableDefault Pageable pageable) {
-        return reserveTicketService.getAvailableSlots(from, pageable);
+
+        return new ResponseEntity<>(reserveTicketService.getAvailableSlots(from, pageable), HttpStatus.OK);
     }
 
     @PostMapping
-    public void reserveSlot(@RequestBody ReserveSlotRequest slotRequest) {
+    public ResponseEntity<Void> reserveSlot(@RequestBody ReserveSlotRequest slotRequest) {
         reserveTicketService.reserveSlot(slotRequest);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
-    public void cancelReservation(@PathVariable Long id) {
+    public ResponseEntity<Void> cancelReservation(@PathVariable Long id) {
         reserveTicketService.cancelReservation(id);
+        return ResponseEntity.ok().build();
     }
 }

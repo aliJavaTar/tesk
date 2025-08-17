@@ -3,7 +3,6 @@ package com.ali.reservation.usecase;
 import com.ali.reservation.infrastructure.security.SecurityUtils;
 import com.ali.reservation.presentation.dto.reqeust.ReserveSlotRequest;
 import com.ali.reservation.presentation.dto.response.ReservationResponse;
-import com.ali.reservation.presentation.exption.ApplicationException;
 import com.ali.reservation.presentation.exption.EntityNotFountException;
 import com.ali.reservation.presentation.exption.TimeNotValidException;
 import org.junit.jupiter.api.BeforeEach;
@@ -83,9 +82,9 @@ class ReserveTicketServiceTest {
 
         var futureTime = LocalDateTime.now().plusHours(1);
         testDataFactory.createReservedSlot(futureTime);
-        var pageable = PageRequest.of(0, 10);
 
-        Page<ReservationResponse> result = reserveTicketService.getAvailableSlots(futureTime, pageable);
+        Page<ReservationResponse> result =
+                reserveTicketService.getAvailableSlots(futureTime, PageRequest.of(0, 10));
 
         assertThat(result).isEmpty();
     }
@@ -94,9 +93,9 @@ class ReserveTicketServiceTest {
     void do_not_allow_getAvailableSlots_withPastTime() {
 
         var pastTime = LocalDateTime.now().minusHours(1);
-        var pageable = PageRequest.of(0, 10);
 
-        assertThatThrownBy(() -> reserveTicketService.getAvailableSlots(pastTime, pageable))
+        assertThatThrownBy(() ->
+                reserveTicketService.getAvailableSlots(pastTime, PageRequest.of(0, 10)))
                 .isInstanceOf(TimeNotValidException.class);
     }
 
@@ -114,16 +113,6 @@ class ReserveTicketServiceTest {
     }
 
     @Test
-    void do_not_allow_reserveSlot_withNonExistentSlot() {
-
-        var nonExistentTime = LocalDateTime.now().plusHours(5);
-        var request = createReserveSlotRequest(nonExistentTime);
-
-        assertThatThrownBy(() -> executeWithMockedUser(() -> reserveTicketService.reserveSlot(request)))
-                .isInstanceOf(ApplicationException.class);
-    }
-
-    @Test
     void do_not_allow_reserveSlot_withAlreadyReservedSlot() {
 
         var slotTime = LocalDateTime.now().plusHours(3);
@@ -131,7 +120,17 @@ class ReserveTicketServiceTest {
         var request = createReserveSlotRequest(slotTime);
 
         assertThatThrownBy(() -> executeWithMockedUser(() -> reserveTicketService.reserveSlot(request)))
-                .isInstanceOf(ApplicationException.class);
+                .isInstanceOf(EntityNotFountException.class);
+    }
+
+    @Test
+    void do_not_allow_reserveSlot_withNonExistentSlot() {
+
+        var nonExistentTime = LocalDateTime.now().plusHours(5);
+        var request = createReserveSlotRequest(nonExistentTime);
+
+        assertThatThrownBy(() -> executeWithMockedUser(() -> reserveTicketService.reserveSlot(request)))
+                .isInstanceOf(EntityNotFountException.class);
     }
 
 
@@ -149,16 +148,15 @@ class ReserveTicketServiceTest {
     }
 
     @Test
-    void dont_allow_cancelReservation_withNonExistentReservation() {
-        Long nonExistentSlotId = 999L;
+    void do_not_allow_cancelReservation_withNonExistentReservation() {
 
         assertThatThrownBy(() -> executeWithMockedUser(() ->
-                reserveTicketService.cancelReservation(nonExistentSlotId)))
+                reserveTicketService.cancelReservation(999L)))
                 .isInstanceOf(EntityNotFountException.class);
     }
 
     @Test
-    void dont_allow_cancelReservation_withOtherUserReservation() {
+    void do_not_allow_cancelReservation_withOtherUserReservation() {
         var otherUser = testDataFactory.createTestUser("other-user");
         var slotTime = LocalDateTime.now().plusHours(4);
         var slot = testDataFactory.createReservedSlot(slotTime);
