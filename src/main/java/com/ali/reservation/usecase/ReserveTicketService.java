@@ -71,7 +71,7 @@ public class ReserveTicketService {
     @Transactional
     public void cancelReservation(Long slotId) {
         reservationRepository.findByUserIdAndSlotId(getCurrentUserId(), slotId)
-                .ifPresentOrElse(this::cancel, () -> {
+                .ifPresentOrElse(this::markToCancel, () -> {
                     throw new EntityNotFountException(ENTITY_NOT_FOUND);
                 });
     }
@@ -83,7 +83,7 @@ public class ReserveTicketService {
         }).orElseThrow(() -> new EntityNotFountException(ENTITY_NOT_FOUND));
     }
 
-    private void cancel(ReservationEntity reservationEntity) {
+    private void markToCancel(ReservationEntity reservationEntity) {
         AvailableSlotEntity availableSlotEntity = reservationEntity.getSlot();
         availableSlotEntity.setReserved(false);
         repository.save(availableSlotEntity);
